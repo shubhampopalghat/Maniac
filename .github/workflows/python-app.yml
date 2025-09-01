@@ -1,0 +1,28 @@
+name: Run Python Bot
+
+on:
+  push:        # Runs on every push
+  workflow_dispatch:  # Allows manual start from GitHub
+  schedule:     # Runs automatically every 30 minutes
+    - cron: "*/30 * * * *"
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run script
+        run: python BigBotFinal.py
